@@ -5,7 +5,6 @@ class CricketTeam:
 			if list[player]["Role"] == role:
 				rolewise_list.append(list[player])
 		return rolewise_list
-	#test comment			
 	def team(list,role,number):
 		total_roles=CricketTeam.total_players(list,role)
 		best_roles = []
