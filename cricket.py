@@ -1,3 +1,51 @@
+class CricketTeam:
+	def total_players(list,role):
+		rolewise_list =[]
+		for player in range(0,len(list)):
+			if list[player]["Role"] == role:
+				rolewise_list.append(list[player])
+		return rolewise_list
+				
+	def batsmen(list,role,number):
+		total_batsmen=CricketTeam.total_players(list,role)
+		best_batsmen = []
+		total_players = []
+		outer_index,inner_index = 0,0
+		while outer_index < len(total_batsmen):
+			while inner_index < len(total_batsmen):
+				if outer_index == inner_index:
+					inner_index+=1
+				elif total_batsmen[outer_index]["BatSkill"] > total_batsmen[inner_index]["BatSkill"]:
+					inner_index+=1
+				elif total_batsmen[outer_index]["BatSkill"] < total_batsmen[inner_index]["BatSkill"]:
+					outer_index = inner_index
+					inner_index+=1
+				else:
+					if total_batsmen[outer_index]["BowlSkill"] > total_batsmen[inner_index]["BowlSkill"]:
+						inner_index+=1
+					elif total_batsmen[outer_index]["BowlSkill"] < total_batsmen[inner_index]["BowlSkill"]:
+						outer_index = inner_index
+						inner_index+=1
+					else:
+						break
+			if len(best_batsmen) == number:
+				break
+			best_batsmen.append(total_batsmen[outer_index])
+			total_players.append((total_batsmen[outer_index]["Name"],total_batsmen[outer_index]["Role"]))
+			total_batsmen.remove(total_batsmen[outer_index])
+			outer_index,inner_index = 0,0
+		return total_players	
+				
+	def players(list):
+		final,final_list = [],[]
+		final_list=CricketTeam.batsmen(list,"Opener",2)
+		final.append(final_list)
+		final_list=CricketTeam.batsmen(list,"TopOrder",2)
+		final.append(final_list)
+		final_list=CricketTeam.batsmen(list,"MiddleOrder",2)
+		final.append(final_list)
+		return final
+
 list = [{"Name":"Player1","Role":"Opener","BatSkill":50,"BowlSkill":0},
 
 {"Name":"Player2","Role":"TopOrder","BatSkill":60,"BowlSkill":0},
@@ -32,186 +80,6 @@ list = [{"Name":"Player1","Role":"Opener","BatSkill":50,"BowlSkill":0},
 
 {"Name":"Player17","Role":"MiddleOrder","BatSkill":46,"BowlSkill":0},
 
-{"Name":"Player18","Role":"Opener","BatSkill":44,"BowlSkill":0}]
-
-list_tmp,tmp_list, final_list =[],[],[]
-for i in range(0,len(list)):
-  if list[i]["Role"] == "Opener":
-    list_tmp.append(list[i])
-#print("The full list of Openers:",list_tmp)
-k,j=0,0
-while(k<len(list_tmp)):
-  while(j<len(list_tmp)):
-    if k==j:
-      j+=1
-    elif list_tmp[k]["BatSkill"] < list_tmp[j]["BatSkill"]:
-      k=j
-      j+=1
-    elif list_tmp[k]["BatSkill"] > list_tmp[j]["BatSkill"]:
-      j+=1
-    else:
-      if list_tmp[k]["BowlSkill"] < list_tmp[j]["BowlSkill"]:
-        k=j
-        j+=1
-      elif list_tmp[k]["BowlSkill"] > list_tmp[j]["BowlSkill"]:
-        j+=1
-      else:
-        break
-  tmp_list.append(list_tmp[k])
-  final_list.append((list_tmp[k]["Name"],list_tmp[k]["Role"]))
-  list_tmp.remove(list_tmp[k])
-  k,j=0,0
-  if len(tmp_list) == 2:
-    break
-#print("\nThe final opener's list:",tmp_list)
-
-list_tmp,tmp_list =[],[]
-for i in range(0,len(list)):
-  if list[i]["Role"] == "TopOrder":
-    list_tmp.append(list[i])
-#print("The full list of TopOrder:",list_tmp)
-k,j=0,0
-while(k<len(list_tmp)):
-  while(j<len(list_tmp)):
-    if k==j:
-      j+=1
-    elif list_tmp[k]["BatSkill"] < list_tmp[j]["BatSkill"]:
-      k=j
-      j+=1
-    elif list_tmp[k]["BatSkill"] > list_tmp[j]["BatSkill"]:
-      j+=1
-    else:
-      if list_tmp[k]["BowlSkill"] < list_tmp[j]["BowlSkill"]:
-        k=j
-        j+=1
-      elif list_tmp[k]["BowlSkill"] > list_tmp[j]["BowlSkill"]:
-        j+=1
-      else:
-        break
-  tmp_list.append(list_tmp[k])
-  final_list.append((list_tmp[k]["Name"],list_tmp[k]["Role"]))
-  list_tmp.remove(list_tmp[k])
-  k,j=0,0
-  if len(tmp_list) == 2:
-    break
-#print("\nThe final TopOrder's list:",tmp_list)
-
-list_tmp,tmp_list =[],[]
-for i in range(0,len(list)):
-  if list[i]["Role"] == "MiddleOrder":
-    list_tmp.append(list[i])
-#print("The full list of MiddleOrder:",list_tmp)
-k,j=0,0
-while(k<len(list_tmp)):
-  while(j<len(list_tmp)):
-    if k==j:
-      j+=1
-    elif list_tmp[k]["BatSkill"] < list_tmp[j]["BatSkill"]:
-      k=j
-      j+=1
-    elif list_tmp[k]["BatSkill"] > list_tmp[j]["BatSkill"]:
-      j+=1
-    else:
-      if list_tmp[k]["BowlSkill"] < list_tmp[j]["BowlSkill"]:
-        k=j
-        j+=1
-      elif list_tmp[k]["BowlSkill"] > list_tmp[j]["BowlSkill"]:
-        j+=1
-      else:
-        break
-  tmp_list.append(list_tmp[k])
-  final_list.append((list_tmp[k]["Name"],list_tmp[k]["Role"]))
-  list_tmp.remove(list_tmp[k])
-  k,j=0,0
-  if len(tmp_list) == 2:
-    break
-#print("\nThe final MiddleOrder's list:",tmp_list)
-
-list_tmp,tmp_list =[],[]
-for i in range(0,len(list)):
-  if list[i]["Role"] == "AllRounder":
-    list_tmp.append(list[i])
-#print("The full list of AllRounder:",list_tmp)
-k,j=0,0
-while(k<len(list_tmp)):
-  while(j<len(list_tmp)):
-    if k==j:
-      j+=1
-    elif (list_tmp[k]["BatSkill"]+list_tmp[k]["BowlSkill"])/2 < (list_tmp[j]["BatSkill"]+list_tmp[j]["BowlSkill"])/2:
-      k=j
-      j+=1
-    elif (list_tmp[k]["BatSkill"]+list_tmp[k]["BowlSkill"])/2 > (list_tmp[j]["BatSkill"]+list_tmp[j]["BowlSkill"])/2:
-      j+=1
-    else:
-      break
-  tmp_list.append(list_tmp[k])
-  final_list.append((list_tmp[k]["Name"],list_tmp[k]["Role"]))
-  list_tmp.remove(list_tmp[k])
-  k,j=0,0
-  if len(tmp_list) == 1:
-    break
-#print("\nThe final AllRounder's list:",tmp_list)
-
-list_tmp,tmp_list =[],[]
-for i in range(0,len(list)):
-  if list[i]["Role"] == "WK":
-    list_tmp.append(list[i])
-#print("The full list of WK:",list_tmp)
-k,j=0,0
-while(k<len(list_tmp)):
-  while(j<len(list_tmp)):
-    if k==j:
-      j+=1
-    elif list_tmp[k]["BatSkill"] < list_tmp[j]["BatSkill"]:
-      k=j
-      j+=1
-    elif list_tmp[k]["BatSkill"] > list_tmp[j]["BatSkill"]:
-      j+=1
-    else:
-      break
-  tmp_list.append(list_tmp[k])
-  final_list.append((list_tmp[k]["Name"],list_tmp[k]["Role"]))
-  list_tmp.remove(list_tmp[k])
-  k,j=0,0
-  if len(tmp_list) == 1:
-    break
-#print("\nThe final WK's list:",tmp_list)
-
-list_tmp,tmp_list =[],[]
-for i in range(0,len(list)):
-  if list[i]["Role"] == "Bowler":
-    list_tmp.append(list[i])
-#print("The full list of bowlers:",list_tmp)
-k,j=0,0
-while(k<len(list_tmp)):
-  while(j<len(list_tmp)):
-    if k==j:
-      j+=1
-    elif list_tmp[k]["BowlSkill"] < list_tmp[j]["BowlSkill"]:
-      k=j
-      j+=1
-    elif list_tmp[k]["BowlSkill"] > list_tmp[j]["BowlSkill"]:
-      j+=1
-    else:
-      if list_tmp[k]["BatSkill"] < list_tmp[j]["BatSkill"]:
-        k=j
-        j+=1
-      elif list_tmp[k]["BatSkill"] > list_tmp[j]["BatSkill"]:
-        j+=1
-      else:
-        break
-  tmp_list.append(list_tmp[k])
-  final_list.append((list_tmp[k]["Name"],list_tmp[k]["Role"]))
-  list_tmp.remove(list_tmp[k])
-  k,j=0,0
-  if len(tmp_list) == 3:
-    break
-#print("\nThe final bowler's list:",tmp_list)
-
-print("The Final List:",final_list)
-
-  
-  
-
-
-    
+{"Name":"Player18","Role":"Opener","BatSkill":44,"BowlSkill":0}]	
+team = CricketTeam()
+print(CricketTeam.players(list))
