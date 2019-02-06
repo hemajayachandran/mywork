@@ -11,7 +11,6 @@ class CricketTeam:
 	def team(list,role,number):
 		total_roles=CricketTeam.total_players(list,role)
 		best_roles = []
-		total_players = []
 		outer_index,inner_index = 0,1
 		if role == "Opener" or role == "TopOrder" or role == "MiddleOrder":
 			while outer_index < len(total_roles) and inner_index < len(total_roles):
@@ -30,8 +29,7 @@ class CricketTeam:
 						break
 				if len(best_roles) == number:
 					break
-				best_roles.append(total_roles[outer_index])
-				total_players.append((total_roles[outer_index]["Name"],total_roles[outer_index]["Role"]))
+				best_roles.append((total_roles[outer_index]["Name"],total_roles[outer_index]["Role"]))
 				total_roles.remove(total_roles[outer_index])
 				outer_index,inner_index = 0,1
 		elif role == "AllRounder":
@@ -57,8 +55,7 @@ class CricketTeam:
 							break
 				if len(best_roles) == number:
 					break
-				best_roles.append(total_roles[outer_index])
-				total_players.append((total_roles[outer_index]["Name"],total_roles[outer_index]["Role"]))
+				best_roles.append((total_roles[outer_index]["Name"],total_roles[outer_index]["Role"]))
 				total_roles.remove(total_roles[outer_index])
 				outer_index,inner_index = 0,1
 		elif role == "WK":
@@ -72,8 +69,7 @@ class CricketTeam:
 					break
 				if len(best_roles) == number:
 					break
-				best_roles.append(total_roles[outer_index])
-				total_players.append((total_roles[outer_index]["Name"],total_roles[outer_index]["Role"]))
+				best_roles.append((total_roles[outer_index]["Name"],total_roles[outer_index]["Role"]))
 				total_roles.remove(total_roles[outer_index])
 				outer_index,inner_index = 0,1
 		else:
@@ -93,11 +89,10 @@ class CricketTeam:
 						break
 				if len(best_roles) == number:
 					break
-				best_roles.append(total_roles[outer_index])
-				total_players.append((total_roles[outer_index]["Name"],total_roles[outer_index]["Role"]))
+				best_roles.append((total_roles[outer_index]["Name"],total_roles[outer_index]["Role"]))
 				total_roles.remove(total_roles[outer_index])
 				outer_index,inner_index = 0,1
-		return total_players	
+		return best_roles	
 				
 	def players(self,list):
 		final,final_list = [],[]
