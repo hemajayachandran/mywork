@@ -10,96 +10,71 @@ class CricketTeam:
 				
 	def team(list,role,number):
 		total_roles=CricketTeam.total_players(list,role)
-		best_roles = []
-		outer_index,inner_index = 0,0
-		if role == "Opener" or role == "TopOrder" or role == "MiddleOrder":
-			while outer_index < len(total_roles):
-				while inner_index < len(total_roles):
-					if outer_index == inner_index:
+		best_roles,outer_index,inner_index = [],0,1
+		if role == "Opener" or role == "TopOrder" or role == "MiddleOrder" or role == "WK":
+			while(True):
+				if total_roles[outer_index]["BatSkill"] > total_roles[inner_index]["BatSkill"]:
+					inner_index+=1
+				elif total_roles[outer_index]["BatSkill"] < total_roles[inner_index]["BatSkill"]:
+						outer_index = inner_index
 						inner_index+=1
-					elif total_roles[outer_index]["BatSkill"] > total_roles[inner_index]["BatSkill"]:
+				else:
+					if total_roles[outer_index]["BowlSkill"] > total_roles[inner_index]["BowlSkill"] and role != "WK":
 						inner_index+=1
-					elif total_roles[outer_index]["BatSkill"] < total_roles[inner_index]["BatSkill"]:
+					elif total_roles[outer_index]["BowlSkill"] < total_roles[inner_index]["BowlSkill"] and role != "WK":
 						outer_index = inner_index
 						inner_index+=1
 					else:
-						if total_roles[outer_index]["BowlSkill"] > total_roles[inner_index]["BowlSkill"]:
-							inner_index+=1
-						elif total_roles[outer_index]["BowlSkill"] < total_roles[inner_index]["BowlSkill"]:
-							outer_index = inner_index
-							inner_index+=1
-						else:
-							break
+						inner_index+=1
+				if inner_index == len(total_roles):
+					best_roles.append((total_roles[outer_index]["Name"],total_roles[outer_index]["Role"]))
+					total_roles.remove(total_roles[outer_index])
+					outer_index,inner_index = 0,1
 				if len(best_roles) == number:
 					break
-				best_roles.append((total_roles[outer_index]["Name"],total_roles[outer_index]["Role"]))
-				total_roles.remove(total_roles[outer_index])
-				outer_index,inner_index = 0,0
 		elif role == "AllRounder":
-			while outer_index < len(total_roles):
-				while inner_index < len(total_roles):
-					if outer_index == inner_index:
-						inner_index+=1
-					elif (total_roles[outer_index]["BatSkill"]+total_roles[outer_index]["BowlSkill"])/2 > (total_roles[inner_index]["BatSkill"]+total_roles[inner_index]["BowlSkill"])/2:
-						inner_index+=1
-					elif (total_roles[outer_index]["BatSkill"]+total_roles[outer_index]["BowlSkill"])/2 < (total_roles[inner_index]["BatSkill"]+total_roles[inner_index]["BowlSkill"])/2:
-						outer_index = inner_index
-						inner_index+=1
-					else:
-						if total_roles[outer_index]["BowlSkill"] > total_roles[inner_index]["BowlSkill"]:
-							inner_index+=1
-						elif total_roles[outer_index]["BowlSkill"] < total_roles[inner_index]["BowlSkill"]:
-							outer_index = inner_index
-							inner_index+=1
-						else:
-							break
-				if len(best_roles) == number:
-					break
-				best_roles.append((total_roles[outer_index]["Name"],total_roles[outer_index]["Role"]))
-				total_roles.remove(total_roles[outer_index])
-				outer_index,inner_index = 0,0
-		elif role == "WK":
-			while outer_index < len(total_roles):
-				while inner_index < len(total_roles):
-					if outer_index == inner_index:
-						inner_index+=1
-					elif total_roles[outer_index]["BatSkill"] > total_roles[inner_index]["BatSkill"]:
-						inner_index+=1
-					elif total_roles[outer_index]["BatSkill"] < total_roles[inner_index]["BatSkill"]:
-						outer_index = inner_index
-						inner_index+=1
-					else:
-						break
-				if len(best_roles) == number:
-					break
-				best_roles.append((total_roles[outer_index]["Name"],total_roles[outer_index]["Role"]))
-				total_roles.remove(total_roles[outer_index])
-				outer_index,inner_index = 0,0
-		else:
-			while outer_index < len(total_roles):
-				while inner_index < len(total_roles):
-					if outer_index == inner_index:
-						inner_index+=1
-					elif total_roles[outer_index]["BowlSkill"] > total_roles[inner_index]["BowlSkill"]:
+			while(True):
+				if (total_roles[outer_index]["BatSkill"]+total_roles[outer_index]["BowlSkill"])/2 > (total_roles[inner_index]["BatSkill"]+total_roles[inner_index]["BowlSkill"])/2:
+					inner_index+=1
+				elif (total_roles[outer_index]["BatSkill"]+total_roles[outer_index]["BowlSkill"])/2 < (total_roles[inner_index]["BatSkill"]+total_roles[inner_index]["BowlSkill"])/2:
+					outer_index = inner_index
+					inner_index+=1
+				else:
+					if total_roles[outer_index]["BowlSkill"] > total_roles[inner_index]["BowlSkill"]:
 						inner_index+=1
 					elif total_roles[outer_index]["BowlSkill"] < total_roles[inner_index]["BowlSkill"]:
 						outer_index = inner_index
 						inner_index+=1
 					else:
-						if total_roles[outer_index]["BatSkill"] > total_roles[inner_index]["BatSkill"]:
-							inner_index+=1
-						elif total_roles[outer_index]["BatSkill"] < total_roles[inner_index]["BatSkill"]:
-							outer_index = inner_index
-							inner_index+=1
-						else:
-							break
+						inner_index+=1
+				if inner_index == len(total_roles):
+					best_roles.append((total_roles[outer_index]["Name"],total_roles[outer_index]["Role"]))
+					total_roles.remove(total_roles[outer_index])
+					outer_index,inner_index = 0,1
 				if len(best_roles) == number:
 					break
-				best_roles.append((total_roles[outer_index]["Name"],total_roles[outer_index]["Role"]))
-				total_roles.remove(total_roles[outer_index])
-				outer_index,inner_index = 0,0
-		return best_roles	
-				
+		else:
+			while(True):
+				if total_roles[outer_index]["BowlSkill"] > total_roles[inner_index]["BowlSkill"]:
+					inner_index+=1
+				elif total_roles[outer_index]["BowlSkill"] < total_roles[inner_index]["BowlSkill"]:
+					outer_index = inner_index
+					inner_index+=1
+				else:
+					if (total_roles[outer_index]["BatSkill"]+total_roles[outer_index]["BowlSkill"])/2 > (total_roles[inner_index]["BatSkill"]+total_roles[inner_index]["BowlSkill"])/2:
+						inner_index+=1
+					elif (total_roles[outer_index]["BatSkill"]+total_roles[outer_index]["BowlSkill"])/2 < (total_roles[inner_index]["BatSkill"]+total_roles[inner_index]["BowlSkill"])/2:
+						outer_index = inner_index
+						inner_index+=1
+					else:
+						inner_index+=1
+				if inner_index == len(total_roles):
+					best_roles.append((total_roles[outer_index]["Name"],total_roles[outer_index]["Role"]))
+					total_roles.remove(total_roles[outer_index])
+					outer_index,inner_index = 0,1
+				if len(best_roles) == number:
+					break		
+		return best_roles
 	def players(self,list):
 		final,final_list = [],[]
 		final_list=CricketTeam.team(self.list,"Opener",2)
