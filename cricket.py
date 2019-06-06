@@ -1,4 +1,5 @@
 class CricketTeam:
+    
 	def total_players(list,role):
 		rolewise_list =[]
 		for player in range(0,len(list)):
